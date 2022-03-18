@@ -29,7 +29,10 @@ export default function Searched() {
 
             {
                 weather && (
-                    <div className={((weather.current.temperature > 25) ? "app humid" : "app")} >
+                    <motion.div animate={{ opacity: 1 }}
+                        initial={{ opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }} className={((weather.current.temperature > 25) ? "app humid" : "app")} >
                         <Nav>
                             <TiWeatherPartlySunny />
                             {/* <br /> */}
@@ -38,10 +41,7 @@ export default function Searched() {
                         <div className="search">
                             <Search />
                         </div>
-                        <motion.h2 animate={{ opacity: 1 }}
-                            initial={{ opacity: 0 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }} >{weather.location.country}</motion.h2>
+                        <h2 >{weather.location.country}</h2>
                         <h1>{weather.current.temperature}°<span>C</span> </h1>
 
 
@@ -49,7 +49,7 @@ export default function Searched() {
                         <br />
                         <br />
                         <h3 className="h3"> {weather.location.localtime}</h3>
-                    </div>
+                    </motion.div>
                 )
             }
         </Bg>
