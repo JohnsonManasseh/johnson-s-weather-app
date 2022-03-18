@@ -14,7 +14,7 @@ export default function Home() {
 
     useEffect(() => {
         const weather = async () => {
-            const data = await axios.get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=india`)
+            const data = await axios.get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=mumbai`)
             console.log(data.data)
             setWeather(data.data)
         }
@@ -39,7 +39,7 @@ export default function Home() {
                         <div className="search">
                             <Search />
                         </div>
-                        <h2>{weather.location.country}</h2>
+                        <h2>{weather.location.name}</h2>
                         <h1>{weather.current.temperature}°<span>C</span> </h1>
                         <h3>{weather.current.weather_descriptions}</h3>
                         <br />
@@ -70,10 +70,10 @@ const Bg = styled.div`
     /* animation: opacity 4s ease-out; */
 }
 
-@keyframes opacity {
+/* @keyframes opacity {
   from {opacity: 0;}
   to {opacity: 1;}
-}
+} */
 
 div{
     h1{

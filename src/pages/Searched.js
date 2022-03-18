@@ -41,7 +41,7 @@ export default function Searched() {
                         <div className="search">
                             <Search />
                         </div>
-                        <h2 >{weather.location.country}</h2>
+                        <h2 >{weather.location.name}</h2>
                         <h1>{weather.current.temperature}°<span>C</span> </h1>
 
 
@@ -74,10 +74,10 @@ const Bg = styled.div`
     /* animation: opacity 4s ease-out; */
 }
 
-@keyframes opacity {
+/* @keyframes opacity {
   from {opacity: 0;}
   to {opacity: 1;}
-}
+} */
 
 div{
     h1{

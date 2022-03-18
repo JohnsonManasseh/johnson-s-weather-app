@@ -17,7 +17,7 @@ export default function Search() {
         <FormStyle onSubmit={submitHandler}>
             <div>
                 <FaSearch onClick={submitHandler} />
-                <input type="text" placeholder="Search other countries" onChange={(e) => setValue(e.target.value)} />
+                <input type="text" placeholder="Search other cities" onChange={(e) => setValue(e.target.value)} />
             </div>
         </FormStyle>
     )
