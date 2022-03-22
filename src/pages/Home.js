@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Search from "../components/Search"
@@ -7,6 +6,7 @@ import { TiWeatherPartlySunny } from "react-icons/ti"
 import { useDispatch, useSelector } from "react-redux"
 import { loadWeather } from "../actions/weatherAction"
 import Modal from "../components/Modal"
+import { getCurrentDate } from "../components/currentDate"
 
 
 
@@ -99,7 +99,7 @@ export default function Home() {
                         <h3>{weather.condition}</h3>
                         <br />
                         <br />
-                        <h3 className="h3"> {weather.localtime}</h3>
+                        <h3 className="h3"> {getCurrentDate()}</h3>
                         <br />
 
                         <br />
