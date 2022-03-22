@@ -4,23 +4,43 @@ import styled from "styled-components"
 import Search from "../components/Search"
 import { Link } from "react-router-dom"
 import { TiWeatherPartlySunny } from "react-icons/ti"
+import { useDispatch, useSelector } from "react-redux"
+import { loadWeather } from "../actions/weatherAction"
+import Modal from "../components/Modal"
 
 
 
 export default function Home() {
 
-    const [weather, setWeather] = useState(null)
+    // const [weather, setWeather] = useState(null)
+
+    const dispatch = useDispatch()
+    const weather = useSelector(state => state.weather)
+    console.log(weather)
+
+    const [modal, showModal] = useState(false)
+
+
+    const handleClose = () => {
+        showModal(false)
+    }
+    const handleOpen = () => {
+        showModal(true)
+    }
+    // useEffect(() => {
+    //     const weather = async () => {
+    //         const data = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_API_KEY}&q=mumbai&aqi=no`)
+    //         console.log(data.data)
+    //         setWeather(data.data)
+    //     }
+    //     weather()
+    // }, [])
 
 
     useEffect(() => {
-        const weather = async () => {
-            const data = await axios.get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=mumbai`)
-            console.log(data.data)
-            setWeather(data.data)
-        }
-        weather()
+        dispatch(loadWeather())
+        // console.log(loadWeather)
     }, [])
-
 
 
 
@@ -28,26 +48,87 @@ export default function Home() {
     return (
         <Bg className="bg " >
 
-            {
-                weather && (
-                    <div className={((weather.current.temperature > 25) ? "app humid" : "app")} >
-                        <Nav to={"/"} >
-                            <TiWeatherPartlySunny />
-                            {/* <br /> */}
-                            <Logo to={"/"} >JOHNSON'S <br /> weather app</Logo>
-                        </Nav>
-                        <div className="search">
-                            <Search />
-                        </div>
-                        <h2>{weather.location.name}</h2>
-                        <h1>{weather.current.temperature}°<span>C</span> </h1>
-                        <h3>{weather.current.weather_descriptions}</h3>
-                        <br />
-                        <br />
-                        <h3 className="h3"> {weather.location.localtime}</h3>
-                    </div>
-                )
+
+            {modal &&
+                <Modal handleClose={handleClose} weather={weather} />
             }
+
+
+            <div className={!weather.location ? "app error" : weather.temperature > 25 ? "app humid" : "app"} >
+                <Nav to={"/"} >
+                    <TiWeatherPartlySunny />
+                    <Logo to={"/"} >JOHNSON'S <br /> weather app</Logo>
+                </Nav>
+                <div className="search">
+                    <Search />
+                </div>
+                {!weather.location ? (<div className="error">
+                    <h2 >Sorry, No data found</h2>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    {/* <h1>{weather.temperature}°<span>C</span> </h1>
+                        <h3>{weather.condition}</h3>
+                        <br />
+                        <br />
+                        <h3 className="h3"> {weather.localtime}</h3> */}
+                    {/* <h2>{date()}</h2> */}
+                </div>) : (
+                    <div>
+                        <h2>{weather.location}</h2>
+                        <h1>{weather.temperature}°<span>C</span> </h1>
+                        <h3>{weather.condition}</h3>
+                        <br />
+                        <br />
+                        <h3 className="h3"> {weather.localtime}</h3>
+                        <br />
+
+                        <br />
+                        <div className="flex">
+                            <div className="container1">
+                                <h5>Yesterday</h5>
+                                <br />
+                                <h3 className="h3">{weather.temperature}°C</h3>
+                            </div>
+                            <div className="container2">
+                                <h5>1 day back</h5>
+                                <br />
+                                <h3 className="h3">{weather.temperature}°C</h3>
+                            </div>
+                            <div className="container3">
+                                <h5>2 days back</h5>
+                                <br />
+                                <h3 className="h3">{weather.temperature}°C</h3>
+                            </div>
+                        </div>
+                        <br />
+                        <div className="button">
+                            <button onClick={handleOpen} >Previous data</button>
+                        </div>
+                        {/* <h2>{date()}</h2> */}
+                    </div>
+                )}
+
+            </div>
         </Bg>
     )
 }
@@ -56,18 +137,24 @@ export default function Home() {
 const Bg = styled.div`
 .app{
     min-height: 100vh;
-    background: linear-gradient(   transparent, rgba(0,0,0,1) ), url("/img_5.jpg");
+    background: linear-gradient(  transparent, rgba(0,0,0,1)  ), url("/img_5.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition:  .4s ease-out;
     /* animation: opacity 4s ease-out; */
-
+  transition:  .4s ease-out;
+    
 
 }
 .app.humid{
-    background: linear-gradient(  transparent, rgba(0,0,0,1)  ), url("/img_3.jpg");
+    background: linear-gradient(  transparent , rgba(0,0,0,1) ), url("/img_3.jpg");
     /* animation: opacity 4s ease-out; */
+}
+.app.error{
+    background: linear-gradient( #695a0867  , rgba(0,0,0,1) ), url("/img_6.jpg");
+    /* background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%; */
 }
 
 /* @keyframes opacity {
@@ -80,7 +167,6 @@ div{
         font-weight: 200;
         color: white;
         font-size: 120px;
-       
     }
     h2{
         color: white;
@@ -94,12 +180,18 @@ div{
         font-size: 20px;
         text-transform: uppercase;
     }
-    .h3{
-font-weight: 300;
-font-size: 13px;
+
+    h5{
+        color: white;
+    font-weight: 400;
+    letter-spacing: 1px;
     }
     span{
         font-size: 30px;
+    }
+    .h3{
+font-weight: 300;
+font-size: 13px;
     }
     display: flex;
     align-items: center;
@@ -108,11 +200,78 @@ font-size: 13px;
 .search{
     padding-bottom: 8rem;
 }
+   
 
 }
+button{
+    background-color: #0e0c0a;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: all .4s ease;
+  border-radius: 16px;
+}
+button:hover{
+    background-color: #0e0c0a9b;
+}
+.flex{
+    display: flex;
+    flex-direction: initial;
+    width: 600px;
+    justify-content: space-between;
+    cursor: pointer;
+    
+}
+/* .flex:hover{
+    background: rgba(255, 255, 255, 0.424);
+} */
+.container1, .container2, .container3{
+    border: none;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 1.5rem;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 1rem;
+    outline: none;
+    transition: all .4s ease;
+    /* width: 100%; */
+    .h3{
+        color: white;
+        font-weight: 100;
+        letter-spacing: 5px;
+        font-size: 20px;
+        text-transform: uppercase;
+    }
 
+}
+.container1:hover, .container2:hover, .container3:hover{
+    background: rgba(255, 255, 255, 0.294);
+}
+
+h5{
+    color: white
+}
+.button{
+    margin-right: 21px;
+}
+.error{
+    padding-top: 20px;
+}
 
 `
+
 const Logo = styled(Link)`
 text-decoration: none;
 font-weight: 400;

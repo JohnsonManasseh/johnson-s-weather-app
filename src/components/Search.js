@@ -2,22 +2,31 @@ import { FaSearch } from "react-icons/fa"
 import styled from "styled-components"
 import { useNavigate } from "react-router"
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+// import { resetReducer } from "../reducers/resetReducer"
+import { resetWeather } from "../actions/searchAction"
 
 export default function Search() {
 
     const navigate = useNavigate()
     const [value, setValue] = useState("")
 
+    const dispatch = useDispatch()
+    const reset = useSelector(state => state.reset)
+    console.log(reset)
+
     const submitHandler = (e) => {
         e.preventDefault()
         navigate("/" + value)
+        setValue("")
+        dispatch(resetWeather())
     }
 
     return (
         <FormStyle onSubmit={submitHandler}>
             <div>
                 <FaSearch onClick={submitHandler} />
-                <input type="text" placeholder="Search other cities" onChange={(e) => setValue(e.target.value)} />
+                <input type="text" value={value} placeholder="Search other cities" onChange={(e) => setValue(e.target.value)} />
             </div>
         </FormStyle>
     )
