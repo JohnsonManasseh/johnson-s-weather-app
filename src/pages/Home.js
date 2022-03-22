@@ -143,11 +143,20 @@ const Bg = styled.div`
     background-repeat: no-repeat;
     /* animation: opacity 4s ease-out; */
   transition:  .4s ease-out;
+  button{
+      background-color: #0b131c;
+  }
     
 
 }
 .app.humid{
     background: linear-gradient(  transparent , rgba(0,0,0,1) ), url("/img_3.jpg");
+    button{
+        background-color: #311209;
+    }
+    button:hover{
+        background-color: #0e0c0a9b;
+    }
     /* animation: opacity 4s ease-out; */
 }
 .app.error{
