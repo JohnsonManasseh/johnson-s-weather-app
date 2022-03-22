@@ -3,7 +3,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis } from 'recharts'
 
 export default function Chart() {
 
-    const pdata = [
+    const weatherData = [
         {
             id: 1,
             name: "1 day back",
@@ -39,7 +39,7 @@ export default function Chart() {
     return (
         <div>Chart
             <ResponsiveContainer width="100%" aspect={3} >
-                <LineChart data={pdata}>
+                <LineChart data={weatherData}>
                     <XAxis dataKey="name" interval="preserveStartEnd" />
                     <Line dataKey="student" />
                 </LineChart>
