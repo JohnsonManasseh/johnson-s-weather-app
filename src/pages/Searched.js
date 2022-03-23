@@ -245,7 +245,7 @@ button:hover{
     flex-direction: initial;
     width: 600px;
     justify-content: space-between;
-    cursor: pointer;
+    
     
 }
 /* .flex:hover{
@@ -265,6 +265,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     border: none;
     border-radius: 1rem;
     outline: none;
+    cursor: pointer;
     transition: all .4s ease;
     /* width: 100%; */
     .h3{
